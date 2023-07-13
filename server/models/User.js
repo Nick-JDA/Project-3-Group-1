@@ -19,7 +19,7 @@ const userSchema = new Schema(
             type: String,
             require: true,
         },
-        gameCart: [gameSchema],
+        gameCart: gameSchema,
     },
     {
         toJSON: {
