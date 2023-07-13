@@ -1,12 +1,14 @@
 
+
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
+
 const reviewSchema = new Schema({
     text: {
         type: String,
-        
+        required: true,
     },
     ratings: [
         {
