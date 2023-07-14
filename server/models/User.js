@@ -19,7 +19,10 @@ const userSchema = new Schema(
             type: String,
             require: true,
         },
-        gameCart: gameSchema,
+        gameCart: {
+            type: Schema.Types.ObjectId,
+            ref: "Game",
+        },
     },
     {
         toJSON: {

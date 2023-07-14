@@ -1,18 +1,20 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const { Schema, model } = require("mongoose");
 
-const ratingSchema = new Schema({
-    // Define the fields for the rating
-    // For example:
-    value: {
-        type: Integer,
-        required: true
+const ratingSchema = new Schema(
+    {
+        value: {
+            type: Number,
+            required: true,
+        },
     },
-    // ... add more fields as needed
-});
+    {
+        toJSON: {
+          virtuals: true,
+        },
+    }
+);
 
-
-const Rating = mongoose.model('Rating', ratingSchema);
+const Rating = model('Rating', ratingSchema);
 
 module.exports = Rating;
 
