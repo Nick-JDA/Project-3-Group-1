@@ -1,7 +1,7 @@
 const db = require('../config/connection');
 const { Game } = require("../models");
-const price = require("../utils/price")
-
+const price = require("../utils/price");
+const fetch = require("node-fetch");
 let url = "https://api.rawg.io/api/games?key=b10c092cf00745d9b1c1a1fe4114df1f";
 let url2 = "https://api.rawg.io/api/games/3498?key=b10c092cf00745d9b1c1a1fe4114df1f"
 // Get Game Name, API_ID, IMAGE 
