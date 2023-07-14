@@ -1,5 +1,4 @@
 const { gql } = require("apollo-server-express");
-
 const typeDefs = gql`
     type User {
         _id: ID!
@@ -7,7 +6,6 @@ const typeDefs = gql`
         password: String!
         gameCart: [Game]
     }
-
     type Game {
         _id: ID!
         name: String!
@@ -15,38 +13,31 @@ const typeDefs = gql`
         description: String!
         reviews: [Review]
     }
-    
     type Review {
         _id: ID!
         text: String!
         ratings: [Rating]
     }
-    
     type Rating {
         _id: ID!
-        value: Int!        
+        value: Int!
     }
-
     type Auth {
         token: String!
         user: User
       }
-
     input gameInput {
         name: String!
         img: String!
-        description: String! 
+        description: String!
       }
-
     input reviewInput {
-        text: String! 
+        text: String!
       }
-
     input ratingInput {
-        value: Int!  
+        value: Int!
       }
-
-    type Query { 
+    type Query {
         me: User
     }
     type Mutation {
@@ -60,4 +51,3 @@ const typeDefs = gql`
     `;
 
 module.exports = typeDefs;
-

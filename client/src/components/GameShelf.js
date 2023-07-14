@@ -3,6 +3,7 @@ import one from "../assets/1.jpg";
 import two from "../assets/2.jpg";
 import Game from "./Game";
 
+
 const GameShelf = () => {
   const games = [
     { wallpaper: one, title: "Arcade Hunt" },
