@@ -15,11 +15,10 @@ const gameSchema = new Schema(
             type: String,
             require: true,
         },
-        link: {
-            type: String,
-            require: true,
-        },
-        reviews: reviewSchema
+        reviews: {
+            type: Schema.Types.ObjectId,
+            ref: "Review",
+        }
     },
     {
         toJSON: {
@@ -32,6 +31,6 @@ gameSchema.virtual('reviewCount').get(function () {
     return this.reviews.length;
 });
 
-const Game = model('User', reviewSchema);
+const Game = model('Game', gameSchema);
 
 module.exports = Game;

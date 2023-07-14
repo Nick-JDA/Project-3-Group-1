@@ -4,7 +4,7 @@ const typeDefs = gql`
     type User {
         _id: ID!
         email: STRING!
-        passowrd: STRING!
+        password: STRING!
         gameCart: [Game]
     }
 
@@ -30,6 +30,7 @@ const typeDefs = gql`
     type Query {
         games: [Game]!
         game(gameId: ID!): Game
+
         
     }
     `
