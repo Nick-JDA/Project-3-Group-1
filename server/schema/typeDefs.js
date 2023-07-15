@@ -1,55 +1,85 @@
-const { gql } = require("apollo-server-express");
-const typeDefs = gql`
-    type User {
-        _id: ID!
-        email: String!
-        password: String!
-        gameCart: [Game]
-    }
-    type Game {
-        _id: ID!
-        name: String!
-        img: String!
-        description: String!
-        type: Float!
-        reviews: [Review]
-    }
-    type Review {
-        _id: ID!
-        text: String!
-        ratings: [Rating]
-    }
-    type Rating {
-        _id: ID!
-        value: Int!
-    }
-    type Auth {
-        token: String!
-        user: User
-      }
-    input gameInput {
-        name: String!
-        img: String!
-        description: String!
-      }
-    input reviewInput {
-        text: String!
-      }
-    input ratingInput {
-        value: Int!
-      }
-    type Query {
-        me: User
-    }
-    type Mutation {
-        login(email: String!, password: String!): Auth
-        addUser(username: String!, email: String!, password: String!): Auth
-        saveGame(input: gameInput!): User
-        removeGame(gameId: ID!): User
-        createReview(input: reviewInput!): Game
-        createRating(input: ratingInput!): Review
-      }
-    `;
+const { gql } = require('apollo-server-express');
 
+const typeDefs = gql`
+  type Category {
+    _id: ID
+    name: String
+  }
+
+  type Product {
+    _id: ID
+    name: String
+    description: String
+    image: String
+    quantity: Int
+    price: Float
+    category: Category
+  }
+
+  type Order {
+    _id: ID
+    purchaseDate: String
+    products: [Product]
+  }
+
+  type User {
+    _id: ID
+    firstName: String
+    lastName: String
+    email: String
+    orders: [Order]
+  }
+
+  type Review {
+    _id: ID
+    text: String
+  }
+
+  type Rating {
+    _id: ID
+    rate: Int
+  }
+
+  type Checkout {
+    session: ID
+  }
+
+  type Auth {
+    token: ID
+    user: User
+  }
+
+  input ProductInput {
+    _id: ID
+    purchaseQuantity: Int
+    name: String
+    image: String
+    price: Float
+    quantity: Int
+  }
+
+  type Query {
+    categories: [Category]
+    products(category: ID, name: String): [Product]
+    product(_id: ID!): Product
+    user: User
+    reviews(product: ID, text: String): [Review]
+    review(_id: ID!): Review
+    ratings(product: ID, rate: Float): [Rating]
+    rating(_id: ID!): Rating
+    order(_id: ID!): Order
+    checkout(products: [ProductInput]): Checkout
+  }
+
+  type Mutation {
+    addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
+    addOrder(products: [ID]!): Order
+    updateUser(firstName: String, lastName: String, email: String, password: String): User
+    updateProduct(_id: ID!, quantity: Int!): Product
+    login(email: String!, password: String!): Auth
+    addReview(products: [ID]!): Review
+    addRating(products: [ID]!): Rating
+  }
+`;
 
 module.exports = typeDefs;
