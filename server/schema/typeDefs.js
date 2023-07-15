@@ -11,6 +11,7 @@ const typeDefs = gql`
         name: String!
         img: String!
         description: String!
+        type: Float!
         reviews: [Review]
     }
     type Review {
@@ -49,5 +50,6 @@ const typeDefs = gql`
         createRating(input: ratingInput!): Review
       }
     `;
+
 
 module.exports = typeDefs;

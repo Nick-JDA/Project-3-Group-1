@@ -15,6 +15,10 @@ const gameSchema = new Schema(
             type: String,
             require: true,
         },
+        price: {
+            type: Number,
+            require: true,
+        },
         reviews: {
             type: Schema.Types.ObjectId,
             ref: "Review",
