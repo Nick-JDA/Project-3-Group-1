@@ -1,111 +1,178 @@
-const User = require("./models/User");
-const Game = require("./models/Game");
-const Review = require("./models/Review");
-const Rating = require("./models/Rating");
-const { AuthenticationError } = require("apollo-server-express");
-const { signToken } = require("./utils/auth");
+const { AuthenticationError } = require('apollo-server-express');
+const { User, Product, Category, Order, Review, Rating } = require('../models');
+const { signToken } = require('../utils/auth');
+const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+
 const resolvers = {
   Query: {
-    me: async (_, __, context) => {
-      if (context.user) {
-        try {
-          const user = await User.findById(context.user._id);
-          return user;
-        } catch (error) {
-          throw new Error(error);
-        }
+    reviews: async (parent, { product, text }) => {
+      const params = {};
+
+      if (product) {
+        params.product = product;
       }
-      throw new AuthenticationError("Not logged in");
+
+      if (text) {
+        params.text = {
+          $regex: text,
+        };
+      }
+
+      return await Review.find(params).populate('product');
+    },
+    
+    ratings: async (parent, { product, rate }) => {
+      const params = {};
+
+      if (product) {
+        params.product = product;
+      }
+
+      if (rate) {
+        params.rate = {
+          $regex: rate,
+        };
+      }
+
+      return await Rating.find(params).populate('product');
+    },
+
+    categories: async () => {
+      return await Category.find();
+    },
+    products: async (parent, { category, name }) => {
+      const params = {};
+
+      if (category) {
+        params.category = category;
+      }
+
+      if (name) {
+        params.name = {
+          $regex: name,
+        };
+      }
+
+      return await Product.find(params).populate('category');
+    },
+    product: async (parent, { _id }) => {
+      return await Product.findById(_id).populate('category');
+    },
+    user: async (parent, args, context) => {
+      if (context.user) {
+        const user = await User.findById(context.user._id).populate({
+          path: 'orders.products',
+          populate: 'category',
+        });
+
+        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
+
+        return user;
+      }
+
+      throw new AuthenticationError('Not logged in');
+    },
+    order: async (parent, { _id }, context) => {
+      if (context.user) {
+        const user = await User.findById(context.user._id).populate({
+          path: 'orders.products',
+          populate: 'category',
+        });
+
+        return user.orders.id(_id);
+      }
+
+      throw new AuthenticationError('Not logged in');
+    },
+    checkout: async (parent, args, context) => {
+      const url = new URL(context.headers.referer).origin;
+      // We map through the list of products sent by the client to extract the _id of each item and create a new Order.
+      await Order.create({ products: args.products.map(({ _id }) => _id) });
+      const line_items = [];
+
+      for (const product of args.products) {
+        line_items.push({
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: product.name,
+              description: product.description,
+              images: [`${url}/images/${product.image}`],
+            },
+            unit_amount: product.price * 100,
+          },
+          quantity: product.purchaseQuantity,
+        });
+      }
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items,
+        mode: 'payment',
+        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${url}/`,
+      });
+
+      return { session: session.id };
     },
   },
   Mutation: {
-    login: async (_, { email, password }) => {
-      try {
-        const user = await User.findOne({ email });
-        if (!user) {
-          throw new AuthenticationError("Incorrect email or password");
-        }
-        const correctPassword = await user.isCorrectPassword(password);
-        if (!correctPassword) {
-          throw new AuthenticationError("Incorrect email or password");
-        }
-        const token = signToken(user);
-        return { token, user };
-      } catch (error) {
-        throw new Error(error);
-      }
+    addUser: async (parent, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
+
+      return { token, user };
     },
-    addUser: async (_, { username, email, password }) => {
-      try {
-        const user = await User.create({ username, email, password });
-        const token = signToken(user);
-        return { token, user };
-      } catch (error) {
-        throw new Error(error);
-      }
-    },
-    saveGame: async (_, { input }, context) => {
+    addOrder: async (parent, { products }, context) => {
+      console.log(context);
       if (context.user) {
-        try {
-          const user = await User.findByIdAndUpdate(
-            context.user._id,
-            { $push: { gameCart: input } },
-            { new: true }
-          );
-          return user;
-        } catch (error) {
-          throw new Error(error);
-        }
+        const order = new Order({ products });
+
+        await User.findByIdAndUpdate(context.user._id, {
+          $push: { orders: order },
+        });
+
+        return order;
       }
-      throw new AuthenticationError("Not logged in");
+
+      throw new AuthenticationError('Not logged in');
     },
-    removeGame: async (_, { gameId }, context) => {
+    updateUser: async (parent, args, context) => {
       if (context.user) {
-        try {
-          const user = await User.findByIdAndUpdate(
-            context.user._id,
-            { $pull: { gameCart: { _id: gameId } } },
-            { new: true }
-          );
-          return user;
-        } catch (error) {
-          throw new Error(error);
-        }
+        return await User.findByIdAndUpdate(context.user._id, args, {
+          new: true,
+        });
       }
-      throw new AuthenticationError("Not logged in");
+
+      throw new AuthenticationError('Not logged in');
     },
-    createReview: async (_, { input }, context) => {
-      if (context.user) {
-        try {
-          const review = await Review.create({ ...input });
-          const game = await Game.findByIdAndUpdate(
-            input.gameId,
-            { $push: { reviews: review } },
-            { new: true }
-          );
-          return game;
-        } catch (error) {
-          throw new Error(error);
-        }
-      }
-      throw new AuthenticationError("Not logged in");
+    updateProduct: async (parent, { _id, quantity }) => {
+      const decrement = Math.abs(quantity) * -1;
+
+      return await Product.findByIdAndUpdate(
+        _id,
+        { $inc: { quantity: decrement } },
+        { new: true }
+      );
     },
-    createRating: async (_, { input }, context) => {
-      if (context.user) {
-        try {
-          const rating = await Rating.create({ ...input });
-          const review = await Review.findByIdAndUpdate(
-            input.reviewId,
-            { $push: { ratings: rating } },
-            { new: true }
-          );
-          return review;
-        } catch (error) {
-          throw new Error(error);
-        }
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new AuthenticationError('Incorrect credentials');
       }
-      throw new AuthenticationError("Not logged in");
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
     },
   },
 };
+
 module.exports = resolvers;

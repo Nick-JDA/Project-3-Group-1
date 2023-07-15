@@ -1,7 +1,8 @@
 const User = require('./User');
-const Review = require("./Review");
-const Game = require("./Game");
-const Rating = require("./Rating");
+const Product = require('./Product');
+const Category = require('./Category');
+const Order = require('./Order');
+const Review = require('./Review');
+const Rating = require('./Rating');
 
-
-module.exports = { User, Game, Review, Rating };
+module.exports = { User, Product, Category, Order, Review, Rating };

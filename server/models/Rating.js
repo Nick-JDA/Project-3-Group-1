@@ -1,21 +1,14 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require('mongoose');
 
-const ratingSchema = new Schema(
-    {
-        value: {
-            type: Number,
-            required: true,
-        },
+const { Schema } = mongoose;
+
+const ratingSchema = new Schema({
+    rate: {
+      type: Number,
+      require: true,
     },
-    {
-        toJSON: {
-          virtuals: true,
-        },
-    }
-);
-
-const Rating = model('Rating', ratingSchema);
-
-module.exports = Rating;
-
-
+  });
+  
+  const Review = mongoose.model('Number', ratingSchema);
+  
+  module.exports = Review;
