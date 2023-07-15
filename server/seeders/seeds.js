@@ -1,6 +1,6 @@
 const db = require('../config/connection');
 const { Game } = require("../models");
-const price = require("../utils/price")
+const  getRandomPrice  = require("../utils/price")
 
 let url = "https://api.rawg.io/api/games?key=b10c092cf00745d9b1c1a1fe4114df1f";
 let url2 = "https://api.rawg.io/api/games/3498?key=b10c092cf00745d9b1c1a1fe4114df1f"
@@ -19,6 +19,7 @@ db.once("open", async () => {
         name: information.results[i].name,
         img: information.results[i].background_image,
         description: information2.description_raw,
+        price: getRandomPrice(),
       }
       empty.push(mod);
     }
