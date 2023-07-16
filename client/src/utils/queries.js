@@ -16,6 +16,24 @@ export const QUERY_PRODUCTS = gql`
   }
 `;
 
+export const Query_REVIEWS = gql`
+  query getReviews($product: ID) {
+    review(product: $product) {
+      _id
+      text
+    }
+  }
+`;
+
+export const Query_RATINGS = gql`
+  query getRatings($product: ID) {
+    rating(product: $product) {
+      _id
+      rate
+    }
+  }
+`;
+
 export const QUERY_CHECKOUT = gql`
   query getCheckout($products: [ProductInput]) {
     checkout(products: $products) {
