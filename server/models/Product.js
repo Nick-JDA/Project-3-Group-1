@@ -31,14 +31,14 @@ const productSchema = new Schema({
   type: {
     type: String
   },
-  review: {
-    type: Schema.Types.ObjectId,
-    ref: "Review",
-  },
-  rating: {
-    type: Schema.Types.ObjectId,
-    ref: "Rating",
-  }
+  // review: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "Review",
+  // },
+  // rating: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "Rating",
+  // }
 });
 
 const Product = mongoose.model('Product', productSchema);

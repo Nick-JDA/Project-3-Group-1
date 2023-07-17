@@ -9,7 +9,9 @@ import { QUERY_CATEGORIES } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
 
 function CategoryMenu() {
+  console.log(useStoreContext());
   const [state, dispatch] = useStoreContext();
+  // console.log(useStoreContext());
 
   const { categories } = state;
 
