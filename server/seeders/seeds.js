@@ -1,6 +1,7 @@
 const db = require('../config/connection');
 const { Product, Category } = require("../models");
 const  getRandomPrice  = require("../utils/price")
+const fetch = require('node-fetch');
 let catIds = [];
 let url = "https://api.rawg.io/api/games?key=b10c092cf00745d9b1c1a1fe4114df1f";
 // let url2 = "https://api.rawg.io/api/games/3498?key=b10c092cf00745d9b1c1a1fe4114df1f"
