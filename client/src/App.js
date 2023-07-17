@@ -7,9 +7,15 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { StoreProvider } from "./utils/GlobalState";
+
 
 import Home from "./pages/Home";
+import Details from "./pages/Detail";
+import Login from "./pages/Login";
+import NoMatch from "./pages/NoMatch";
+import OrderHisotry from "./pages/OrderHistory";
+import Signup from "./pages/Signup";
+import Success from "./pages/Success";
 //import Login from "./pages/Login";
 //import Signup from "./components/Signup";
 
@@ -35,17 +41,17 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <StoreProvider>
         <Router>
           <div>
             <Routes>
               <Route path="/" element={<Home />} />
-              {/* <Route path="/login" element={<Login />} /> */}
-              {/* <Route path="/signup" element={<Signup />} /> */}
+              <Route path="/login" element={<Login/>}/>
+              <Route path="/signup" element={<Signup/>}/>
+              <Route path="/products/:id" element={Details}/>
+
             </Routes>
           </div>
         </Router>
-      </StoreProvider>
     </ApolloProvider>
 
   );
