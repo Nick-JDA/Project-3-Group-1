@@ -44,7 +44,6 @@ get_category()
       let empty = [];
       const response = await fetch(url);
       const information = await response.json();
-      console.log(data);
       for (let i = 0; i < information.results.length; i ++) {
         let id = information.results[i].id
         const response2 = await fetch(`https://api.rawg.io/api/games/${id}?key=b10c092cf00745d9b1c1a1fe4114df1f`)
@@ -55,8 +54,6 @@ get_category()
         } else if (information.results[i].genres.length === 1) {
             genre = ("Adventure");
         }
-        console.log(information.results[i].name);
-        console.log(genre);
 
         if (genre === "Action Adventure") {
           await Product.insertMany({
@@ -131,40 +128,12 @@ get_category()
         }
       }
     })
-    console.log("Category inserted")
+    console.log("Category inserted");
+    console.log("Product inserted");
+    console.log("Done seeding");
 
 }) 
 
-
-// async function get_product() {
-//     let empty = [];
-//     const response = await fetch(url);
-//     const information = await response.json();
-//     for (let i = 0; i < (information.results).length; i ++) {
-//         let id = information.results[i].id
-//         const response2 = await fetch(`https://api.rawg.io/api/games/${id}?key=b10c092cf00745d9b1c1a1fe4114df1f`)
-//         const information2 = await response2.json();
-//         let mod = {
-//             name: information.results[i].name,
-//             image: information.results[i].background_image,
-//             description: information2.description_raw,
-//             quantity: 100,
-//             price: getRandomPrice()
-//         }
-//         empty.push(mod);
-//     }
-//     return empty;
-// }
-
-
-// get_product()
-// .then(async function(result) {
-//     await Product.deleteMany({});
-//     await Product.insertMany(result);
-//     console.log("Product inserted");
-//     console.log("DONE SEEDING");
-//     process.exit(0);
-//     })
 })
 
 
