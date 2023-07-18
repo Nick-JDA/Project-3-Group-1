@@ -3,6 +3,8 @@ import logo from "../../assets/logo.png";
 import { FiMenu } from "react-icons/fi";
 import { ImDownload } from "react-icons/im";
 import { BiWorld } from "react-icons/bi";
+import { Link } from "react-router-dom";
+import { Login } from "../../pages/Login";
 
 const Nav = () => {
   return (
@@ -45,9 +47,9 @@ const Nav = () => {
             <p className="">Install Smoke</p>
           </div>
           <div className="ml-3 py-[2px]">
-            <p className="text-[#c5c3c0] hover:text-white duration-100 ease-out">
-              login
-            </p>
+            <Link to="/login" className="text-[#c5c3c0] hover:text-white duration-100 ease-out">
+                login
+            </Link>
           </div>
           <div className="h-[15px] w-[1px] bg-[#c5c3c0] mx-2"></div>
           <div className="flex items-center">

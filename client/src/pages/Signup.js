@@ -3,6 +3,7 @@ import logo from "../assets/logo.png";
 import { useMutation } from "@apollo/client";
 import Auth from "../utils/auth";
 import { ADD_USER } from "../utils/mutations";
+import { Link } from "react-router-dom";
 
 function Signup(props) {
   const [formState, setFormState] = useState({ email: "", password: "" });
@@ -34,7 +35,9 @@ function Signup(props) {
       <div className="bg-[#171a21]">
         <div className="flex items-center justify-center py-2 px-2 lg:py-6 lg:px-8 w-full lg:w-auto">
           <div className="flex items-center justify-center text-[#c5c3c0] text-[26px]">
-            <img src={logo} alt="Smoke-logo" className="w-12 h-12 mr-2" />
+            <Link to="/">
+              <img src={logo} alt="Smoke-logo" className="w-12 h-12 mr-2" />
+            </Link>
             <p>SMOKE</p>
           </div>
         </div>

@@ -45,8 +45,8 @@ function App() {
           <div className=" bg-[#1b2838]">
             <Routes>
               <Route path="/" element={<Home />} />
-              {/* <Route path="/login" element={<Login/>}/>
-              <Route path="/signup" element={<Signup/>}/> */}
+              <Route path="/login" element={<Login/>}/>
+              <Route path="/signup" element={<Signup/>}/> 
               {/* <Route path="/products/:id" element={Details}/> */}
 
             </Routes>
