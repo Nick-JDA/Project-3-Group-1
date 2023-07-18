@@ -4,7 +4,6 @@ import { useQuery } from "@apollo/client";
 import CategoryMenu from "../components/CategoryMenu";
 import Nav from "../components/Nav";
 
-
 import { QUERY_CATEGORIES } from "../utils/queries";
 //import { QUERY_PRODUCTS } from "../utils/queries"
 import getRandomPrice from "../utils/price";

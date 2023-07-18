@@ -27,18 +27,26 @@ const Nav = () => {
         <div className="hidden lg:flex pl-10">
           <ul className="text-[#c5c3c0] text-[13px] flex gap-5">
             <li>
+              <Link to="/Store">
               <p className="hover:text-white duration-100 ease-out">STORE</p>
+              </Link>
             </li>
             <li>
+            <Link to="/Community">
               <p className="hover:text-white duration-100 ease-out">
                 COMMUNITY
               </p>
+            </Link>
             </li>
             <li>
+            <Link to="/About">
               <p className="hover:text-white duration-100 ease-out">ABOUT</p>
+            </Link>
             </li>
             <li>
+              <Link to="/Support">
               <p className="hover:text-white duration-100 ease-out">SUPPORT</p>
+              </Link>
             </li>
           </ul>
         </div>
