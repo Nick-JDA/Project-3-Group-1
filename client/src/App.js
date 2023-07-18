@@ -42,7 +42,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
         <Router>
-          <div>
+          <div className=" bg-[#1b2838]">
             <Routes>
               <Route path="/" element={<Home />} />
               {/* <Route path="/login" element={<Login/>}/>
