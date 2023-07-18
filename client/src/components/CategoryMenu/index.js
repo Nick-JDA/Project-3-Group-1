@@ -8,7 +8,10 @@ const CategoryMenu = ({ categories, title }) => {
         <ul className="flex items-center py-1.5 text-white text-[14px] gap-10">
           {categories.map((category) => (
             <li key={category._id}>
-              <button>{category.name}</button>
+              <Link to={`/${category.name.replace(" ", "")}`}>
+                {console.log(category.name.replace(" ", ""))}
+                <button>{category.name}</button>
+              </Link>
             </li>
           ))}
         </ul>

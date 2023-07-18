@@ -17,7 +17,9 @@ const Nav = () => {
           </div>
 
           <div className="flex items-center text-[#c5c3c0] font-semibold text-[26px]">
-            <img src={logo} alt="Smoke-logo" className="w-12 h-12 mr-2" />
+            <Link to="/">
+              <img src={logo} alt="Smoke-logo" className="w-12 h-12 mr-2" />
+            </Link>
             <p>SMOKE</p>
           </div>
         </div>
