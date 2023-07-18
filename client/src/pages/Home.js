@@ -1,21 +1,22 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 
+import CategoryMenu from "../components/CategoryMenu";
 import ProductList from "../components/ProductList";
 
-import CategoryMenu from "../components/CategoryMenu";
 
-import { QUERY_CATEGORIES, QUERY_ALL_PRODUCTS } from "../utils/queries";
+import { QUERY_CATEGORIES } from "../utils/queries";
+import { QUERY_PRODUCTS } from "../utils/queries"
 
 const Home = () => {
     const { loading, data } = useQuery(QUERY_CATEGORIES);
     const categories = data?.categories || [];
-    // const { loading2, data2 } = useQuery(QU) 
-
+    console.log(categories);
+    
     return (
         <div>
             <CategoryMenu categories={categories}/>
-            {/* <ProductList /> */}
+            <ProductList/>
         </div>
     )
 }
