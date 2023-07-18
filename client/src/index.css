@@ -6,6 +6,10 @@
   font-family: "Noto Sans", sans-serif;
 }
 
+img {
+  width: 500px
+}
+
 .gradient {
   background: rgb(58, 99, 144);
   background: linear-gradient(
