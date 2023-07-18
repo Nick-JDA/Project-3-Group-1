@@ -12,12 +12,15 @@ import { setContext } from "@apollo/client/link/context";
 import Home from "./pages/Home";
 import Details from "./pages/Detail";
 import Login from "./pages/Login";
-import NoMatch from "./pages/NoMatch";
-import OrderHisotry from "./pages/OrderHistory";
 import Signup from "./pages/Signup";
-import Success from "./pages/Success";
-//import Login from "./pages/Login";
-//import Signup from "./components/Signup";
+import ActionAdventure from "./pages/ActionAdventure";
+import ShooterPuzzle from "./pages/ShooterPuzzle.js";
+import ActionShooter from "./pages/ActionShooter";
+import AdventurePuzzle from "./pages/AdventurePuzzle";
+import ActionRPG from "./pages/ActionRPG";
+import Adventure from "./pages/Adventure";
+import AdventureIndie from "./pages/Adventure Indie";
+
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -47,7 +50,13 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login/>}/>
               <Route path="/signup" element={<Signup/>}/> 
-              {/* <Route path="/products/:id" element={Details}/> */}
+              {/* <Route path="/ActionAdventure" element={ActionAdventure}/> */}
+              {/* <Route path="/ShooterPuzzle" element={ShooterPuzzle}/> */}
+              {/* <Route path="/ActionShooter" element={ActionShooter}/> */}
+              {/* <Route path="/AdventurePuzzle" element={AdventurePuzzle}/> */}
+              {/* <Route path="/ActionRPG" element={ActionRPG}/> */}
+              {/* <Route path="/Adventure" element={Adventure}/> */}
+              {/* <Route path="/AdventureIndie" element={AdventureIndie}/> */}
 
             </Routes>
           </div>
