@@ -10,7 +10,6 @@ import { setContext } from "@apollo/client/link/context";
 
 
 import Home from "./pages/Home";
-import Details from "./pages/Detail";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ActionAdventure from "./pages/ActionAdventure";
@@ -26,6 +25,10 @@ import Portal2 from "./pages/Portal2";
 import Portal from "./pages/Portal";
 import TombRaider from "./pages/TombRaider";
 import CSGO from "./pages/CSGO";
+import Store from "./pages/Store";
+import Community from "./pages/Community";
+import About from "./pages/About";
+import Support from "./pages/Support";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -68,6 +71,11 @@ function App() {
               <Route path="/TombRaider" element={<TombRaider/>}/>
               <Route path="/Counter-Strike:GlobalOffensive" element={<CSGO/>}/>
               <Route path="/Portal" element={<Portal/>}/>
+              <Route path="/Store" element={<Store/>}/>
+              <Route path="/Community" element={<Community/>}/>
+              <Route path="/About" element={<About/>}/>
+              <Route path="/Support" element={<Support/>}/>
+
 
             </Routes>
           </div>
